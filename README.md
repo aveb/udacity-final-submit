@@ -50,13 +50,19 @@ Resources used:
 Resources used:
 - Udacity Deploying to Linux Servers: Lesson 2
 
-## Opening ```Catalog App```
+## Changing Port and Configuring Firewall
 
-Open your favorite browser and go to [http://localhost:5000/](http://localhost:5000/)
+1. Change SSH port to 2200 by running ```sudo nano /etc/ssh/sshd_config``` and changing port from 22 to 2200.
+2. From your lightsail instance console, find ```Networking``` and add ```port 2200``` and ```port 123```
+3. Restart your SSH service with ```sudo service ssh restart```.  You will now need to log out and back into SSH using ```ssh grader@54.144.201.169 -i ~/.ssh/graderKey2 -p 2200```
+4. Configure and enable your firewall by allowing the following:
 
-## Accessing ```Catalog App API```
+        $ sudo ufw allow 2200/tcp
+        $ sudo ufw allow 123/udp
+        $ sudo ufw allow 80/tcp
+        $ sudo ufw enable
 
-Two API endpoints are available for developers:
+Resources used:
+- Udacity Deploying to Linux Servers: Lesson 2
+- Udacity Student Hub Project: Linux Server Configuration
 
-1. Access JSON file of ```All Categories```.  Use this link: [http://localhost:5000/catalog/JSON/](http://localhost:5000/catalog/JSON/)
-2. Access JSON file of ```All Items```.  Use this link: [http://localhost:5000/catalog/items/JSON/](http://localhost:5000/catalog/items/JSON/)
