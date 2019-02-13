@@ -66,3 +66,101 @@ Resources used:
 - Udacity Deploying to Linux Servers: Lesson 2
 - Udacity Student Hub Project: Linux Server Configuration
 
+## Installing Apache2 and importing project from git
+
+1. Install apache2 using ```sudo apt-get install apache2```
+2. Visit [54.144.201.169](54.144.201.169) to make sure apache is working.
+3. Install mod-wsgi with ```$sudo apt-get install libapache2-mod-wsgi python-dev```
+4. Enable mod-wsgi with ```sudo a2enmod wsgi```
+5. run ```cd /var/www``` and create catalog directory with ```mkdir catalog```
+6. install and initial ```git``` and clone the ```catalog``` git repository.
+7. cd into ```catalog``` and you should have all of the files for your application
+
+Resources used:
+-[https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps)
+
+## Installing virtual environment and updating project dependences
+
+1. make sure pip is installed with ```sudo apt-get install python-pip```
+2. Install virtual environment with ```sudo pip install virtualenv```
+3. create your virtual environment with ```sudo virtualenv venv``` and activate it with ```source venv/bin/activate```
+4. install and update project dependences:
+
+        $ sudo pip install Flask
+        $ sudo pip install httplib2 request oauth2client sqlalchemy
+        $ sudo pip install psycopg2-binary
+        $ sudo pip install --upgrade oauth2client
+
+Resources used:
+-[https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps)
+-[https://github.com/CHBaker/Linux-Server-Configuration](https://github.com/CHBaker/Linux-Server-Configuration)
+ 
+## Creating and configuring database
+
+The original ```Catalog App```'s database needs to be changed to ```posgresql``` and engine paths need to be updated.
+
+1. Edit the db_setup.py file with ```sudo nano db_setup.py``` and change create_engine path to ```postgresql://catalog:catalog@localhost/catalog```
+2. Edit the add_categories.py file with ```sudo nano add_categories.py``` and change create_engine path to ```postgresql+psycopg2://catalog:catalog@localhost/catalog```
+3. Edit ```__init__.py``` with ```sudo nano __init__.py``` and change engine path to ```postgresql+psycopg2://catalog:catalog@localhost/catalog```
+4. Wile editing ```__init__.py```, also update path for client_secrets.json to ```/var/www/catalog/catalog/client_secrets.json```
+5. Install Posgresql with ```sudo apt-get install libpq-dev python-dev``` and ```sudo apt-get install postgresql postgresql-contrib```
+6. Change to posgresql user and login with ```sudo su - postgres``` and ```psql```
+7. Create user, set permissions and exit psql shell with:
+
+        # CREATE USER catalog WITH PASSWORD 'catalog';
+        # ALTER USER catalog CREATEDB;
+        # CREATE DATABASE catalog WITH OWNER catalog;
+        # \c catalog;
+        $ exit
+
+8. Initialize database with ```$ sudo python db_setup.py```
+9. Add data to database with ```$ sudo python add_categories.py```
+10. Make sure app will run with no errors by running: ```$ sudo python __init__.py```
+11. Exit out of virtual environment with ```$ deactivate```
+
+Resources used:
+-[https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps)
+-[https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-16-04](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-16-04)
+-[https://github.com/CHBaker/Linux-Server-Configuration](https://github.com/CHBaker/Linux-Server-Configuration)
+
+## Configure and enable virtual host
+
+1. Run ```$ sudo nano /etc/apache2/sites-available/catalog.conf```
+2. Add the following into the file and save:
+
+        <VirtualHost *:80>
+                ServerName 54.144.201.169
+                ServerAdmin admin@54.144.201.169
+                WSGIScriptAlias / /var/www/catalog/catalog.wsgi
+                <Directory /var/www/catalog/catalog/>
+                        Order allow,deny
+                        Allow from all
+                </Directory>
+                Alias /static /var/www/catalog/catalog/static
+                <Directory /var/www/catalog/catalog/static/>
+                        Order allow,deny
+                        Allow from all
+                </Directory>
+                ErrorLog ${APACHE_LOG_DIR}/error.log
+                LogLevel warn
+                CustomLog ${APACHE_LOG_DIR}/access.log combined
+        </VirtualHost>
+        
+3. Enable virtual host with ```$ sudo a2ensite FlaskApp```
+4. change directory and create wsgi file with ```$ cd /var/www/catalog``` and ```$ sudo nano catalog.wsgi```
+5. Add the following code to ```catalog.wsgi```:
+
+        #!/usr/bin/python
+        import sys
+        import logging
+        logging.basicConfig(stream=sys.stderr)
+        sys.path.insert(0,"/var/www/catalog/")
+
+        from catalog import app as application
+        application.secret_key = 'Add your secret key'
+        
+ 6. Restart Apache with ```$sudo service apache2 restart```
+ 
+Resources used:
+-[https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps)
+
