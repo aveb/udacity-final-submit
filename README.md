@@ -77,7 +77,7 @@ Resources used:
 7. cd into ```catalog``` and you should have all of the files for your application
 
 Resources used:
--[https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps)
+- [https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps)
 
 ## Installing virtual environment and updating project dependences
 
@@ -92,8 +92,8 @@ Resources used:
         $ sudo pip install --upgrade oauth2client
 
 Resources used:
--[https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps)
--[https://github.com/CHBaker/Linux-Server-Configuration](https://github.com/CHBaker/Linux-Server-Configuration)
+- [https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps)
+- [https://github.com/CHBaker/Linux-Server-Configuration](https://github.com/CHBaker/Linux-Server-Configuration)
  
 ## Creating and configuring database
 
@@ -118,10 +118,10 @@ The original ```Catalog App```'s database needs to be changed to ```posgresql```
 10. Make sure app will run with no errors by running: ```$ sudo python __init__.py```
 11. Exit out of virtual environment with ```$ deactivate```
 
-Resources used:
--[https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps)
--[https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-16-04](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-16-04)
--[https://github.com/CHBaker/Linux-Server-Configuration](https://github.com/CHBaker/Linux-Server-Configuration)
+ Resources used:
+ - [https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps)
+ - [https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-16-04](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-16-04)
+ - [https://github.com/CHBaker/Linux-Server-Configuration](https://github.com/CHBaker/Linux-Server-Configuration)
 
 ## Configure and enable virtual host
 
@@ -162,5 +162,5 @@ Resources used:
  6. Restart Apache with ```$sudo service apache2 restart```
  
 Resources used:
--[https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps)
+- [https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps)
 
